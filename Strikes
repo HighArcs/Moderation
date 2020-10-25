@@ -1,7 +1,7 @@
 //Strikes by Asian Nate#8962 and WhyHewwo#7118 on Discord.
 const strikeKV = new pylon.KVNamespace('strike');
 
-servermod.on(
+commands.on(
   'strike',
   (args) => ({ members: args.guildMember(), reason: args.text() }),
   async (message, { members, reason }) => {
@@ -28,15 +28,10 @@ commands.on(
     user: args.guildMember()
   }),
   async (message, { user }) => {
-    //discord.command.filters.isAdministrator();
+    discord.command.filters.isAdministrator();
     const oldCount = (await strikeKV.get<number>(user.user.id)) || 0;
     let newCount = 0;
     if (isNaN(newCount as number)) return await message.reply('invalid number');
-    if (
-      message.member.roles.includes('766143300251811881') ||
-      message.member.roles.includes('730937281833074782') ||
-      message.member.roles.includes('735743771051819048')
-    )
       await strikeKV.put(user.user.id, newCount as number);
     await message.reply(
       `**${user.user.getTag()}**'s strikes have been reset from **${oldCount}** to **0**.`
@@ -82,8 +77,8 @@ commands.on(
   },
   (args) => ({ who: args.user(), count: args.string(), reason: args.text() }),
   async (message, { who, count, reason }) => {
-    //if (!(await discord.command.filters.isAdministrator().filter(message)))
-    //  return await message.reply('missing permissions');
+    if (!(await discord.command.filters.isAdministrator().filter(message)))
+      return await message.reply('missing permissions');
 
     if (who.bot)
       return await message.reply(
@@ -95,10 +90,6 @@ commands.on(
     else if (count.startsWith('-'))
       newCount -= parseInt(count.replace('-', ''));
     else newCount = parseInt(count);
-    if (
-      message.member.roles.includes('766143300251811881') ||
-      message.member.roles.includes('730937281833074782')
-    )
       if (isNaN(newCount as number))
         return await message.reply('invalid count');
 
