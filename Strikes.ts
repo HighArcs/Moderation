@@ -1,4 +1,4 @@
-//Strikes by Asian Nate#8962 and WhyHewwo#7118 on Discord.
+//Strikes by Asian Nate#8962 and WhyHewwo#5530 on Discord.
 const strikeKV = new pylon.KVNamespace('strike');
 
 commands.on(
